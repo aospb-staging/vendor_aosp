@@ -235,5 +235,9 @@ PRODUCT_PACKAGES += \
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
 
+# Apps
+PRODUCT_PACKAGES += \
+    Aperture
+
 # Fonts
 include vendor/aosp/config/fonts.mk
