@@ -100,11 +100,6 @@ endif
 PRODUCT_COPY_FILES += \
     vendor/aosp/prebuilt/common/etc/init/init.lineage-updater.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.lineage-updater.rc
 
-# Config
-PRODUCT_PACKAGES += \
-    SimpleDeviceConfig \
-    SimpleSettingsConfig
-
 # Extra tools in Lineage
 PRODUCT_PACKAGES += \
     bash \
