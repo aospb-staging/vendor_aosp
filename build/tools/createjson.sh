@@ -16,72 +16,46 @@
 #
 
 #$1=TARGET_DEVICE, $2=PRODUCT_OUT, $3=FILE_NAME
-existingOTAjson=./aospb_ota/devices/$1.json
 output=$2/$1.json
 
-#cleanup old file
-if [ -f $output ]; then
-	rm $output
+# Cleanup old file
+if [ -f "$output" ]; then
+	rm "$output"
 fi
 
 echo "Generating JSON file data for OTA support..."
 
-if [ -f $existingOTAjson ]; then
-	#get data from already existing device json
-	#there might be a better way to parse json yet here we try without adding more dependencies like jq
-	buildprop=$2/system/build.prop
-	linenr=`grep -n "ro.build.date.utc" $buildprop | cut -d':' -f1`
-	datetime=`sed -n $linenr'p' < $buildprop | cut -d'=' -f2`
-	filename=$3
-	id=`sha256sum "$2/$3" | cut -d' ' -f1`
-	romtype=OFFICIAL
-	size=`stat -c "%s" "$2/$3"`
-	version=`echo "$3" | cut -d'-' -f2`
-	v_max=`echo "$version" | cut -d'.' -f1 | cut -d'v' -f2`
-	v_min=`echo "$version" | cut -d'.' -f2`
-	version=`echo $v_max.$v_min`
-
-	echo '{
-	"response": [
-      {
-		"datetime": '$datetime',
-		"filename": "'$filename'",
-		"id": "'$id'",
-		"romtype": "'$romtype'",
-		"size": '$size',
-		"url": "https://sourceforge.net/projects/aospb-project/files/'$1'/'$3'/download",
-		"version": "'$version'"
-	  }
-	]
-}' >> $output
-else
-	buildprop=$2/system/build.prop
-	linenr=`grep -n "ro.build.date.utc" $buildprop | cut -d':' -f1`
-	datetime=`sed -n $linenr'p' < $buildprop | cut -d'=' -f2`
-	filename=$3
-	id=`sha256sum "$2/$3" | cut -d' ' -f1`
-	romtype=UNOFFICIAL
-	size=`stat -c "%s" "$2/$3"`
-	version=`echo "$3" | cut -d'-' -f2`
-	v_max=`echo "$version" | cut -d'.' -f1 | cut -d'v' -f2`
-	v_min=`echo "$version" | cut -d'.' -f2`
-	version=`echo $v_max.$v_min`
-
-    echo '{
-	"response": [
-      {
-		"datetime": '$datetime',
-		"filename": "'$filename'",
-		"id": "'$id'",
-		"romtype": "'$romtype'",
-		"size": '$size',
-		"url": "https://sourceforge.net/projects/aospb-project/files/'$1'/'$3'/download",
-		"version": "'$version'"
-	  }
-	]
-}' >> $output
-
-	echo 'There is no official support for this device yet'
+# Check if filename contains "UNOFFICIAL" and exit if true
+if [[ "$3" == *"UNOFFICIAL"* ]]; then
+    echo "Skipping JSON generation as the build is marked UNOFFICIAL."
+    exit 0
 fi
 
-echo ""
+# Set romtype to OFFICIAL since we’ve confirmed it’s not UNOFFICIAL
+romtype="OFFICIAL"
+
+# Generate JSON data
+buildprop="$2/system/build.prop"
+linenr=`grep -n "ro.build.date.utc" "$buildprop" | cut -d':' -f1`
+datetime=`sed -n "$linenr"p < "$buildprop" | cut -d'=' -f2`
+filename="$3"
+id=`sha256sum "$2/$3" | cut -d' ' -f1`
+size=`stat -c "%s" "$2/$3"`
+version=`echo "$3" | cut -d'_' -f2 | cut -d'-' -f1`
+
+# Create JSON output
+echo '{
+  "response": [
+    {
+      "datetime": '"$datetime"',
+      "filename": "'"$filename"'",
+      "id": "'"$id"'",
+      "romtype": "'"$romtype"'",
+      "size": '"$size"',
+      "url": "https://sourceforge.net/projects/aospb-project/files/'"$1"'/'"$3"'/download",
+      "version": "'"$version"'"
+    }
+  ]
+}' >> "$output"
+
+echo "JSON file generated successfully at $output"
