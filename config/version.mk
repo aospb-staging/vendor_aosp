@@ -25,6 +25,7 @@ PRODUCT_SYSTEM_PROPERTIES += \
     ro.custom.build.date=$(CUSTOM_BUILD_DATE) \
     ro.custom.device=$(CUSTOM_BUILD) \
     ro.custom.fingerprint=$(ROM_FINGERPRINT) \
+    ro.custom.maintainer=$(CUSTOM_MAINTAINER) \
     ro.custom.releasetype=$(CUSTOM_BUILDTYPE) \
     ro.custom.showversion=$(CUSTOM_SHOW_VERSION) \
     ro.custom.version=$(CUSTOM_VERSION) \
