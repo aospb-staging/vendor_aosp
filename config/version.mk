@@ -6,6 +6,7 @@ AOSP_VERSION := aosPB-$(CURRENT_DEVICE)-$(shell date -u +%Y%m%d-%H%M)
 
 # AOSP version properties
 PRODUCT_SYSTEM_PROPERTIES += \
+    ro.aospb.maintainer=$(AOSPB_MAINTAINER) \
     ro.aosp.version=$(AOSP_VERSION) \
     ro.aosp.releasetype=$(AOSP_BUILD_TYPE) \
     ro.aosp.build.version=$(CURRENT_DEVICE)-$(shell date -u +%Y%m%d-%H%M)
