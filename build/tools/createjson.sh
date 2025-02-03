@@ -51,7 +51,7 @@ echo '{
       "id": "'"$id"'",
       "romtype": "'"$romtype"'",
       "size": '"$size"',
-      "url": "https://sourceforge.net/projects/aospb-project/files/'"$1"'/'"$3"'/download",
+      "url": "https://sourceforge.net/projects/aospb-project/files/'"$1"'/'"$3"'/download"
     }
   ]
 }' >> "$output"
