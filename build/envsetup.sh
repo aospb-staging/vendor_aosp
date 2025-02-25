@@ -9,8 +9,8 @@ function check_product()
         echo "Couldn't locate the top of the tree. Try setting TOP." >&2
         return
     fi
-    if (echo -n $1 | grep -q -e "^aosp_") ; then
-        AOSP_BUILD=$(echo -n $1 | sed -e 's/^aosp_//g')
+    if (echo -n $1 | grep -q -e "^aospb_") ; then
+        AOSP_BUILD=$(echo -n $1 | sed -e 's/^aospb_//g')
     else
         AOSP_BUILD=
     fi
@@ -56,7 +56,7 @@ function breakfast()
                 variant="userdebug"
             fi
 
-            lunch aosp_$target-$aosp_target_release-$variant
+            lunch aospb_$target-$aosp_target_release-$variant
         fi
     fi
     return $?
