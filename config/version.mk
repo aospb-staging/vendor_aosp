@@ -6,7 +6,7 @@ ifeq ($(IS_SIGNED),true)
 -include vendor/lineage-priv/keys/keys.mk
 endif
 
-CUSTOM_INCREMENTAL := .1
+CUSTOM_INCREMENTAL := .2
 
 CUSTOM_PLATFORM_VERSION := 15
 
