@@ -1,20 +1,25 @@
 CUSTOM_BUILD_DATE := $(shell date -u +%Y%m%d)
 CUSTOM_BUILD_DATETIME := $(shell date -u +%Y%m%d-%H%M)
 
+KEYS_MK_PATH := vendor/lineage-priv/keys/keys.mk
+KEYS_EXIST := $(shell [ -f $(KEYS_MK_PATH) ] && echo true || echo false)
+
 # Signing
-ifeq ($(IS_SIGNED),true)
--include vendor/lineage-priv/keys/keys.mk
+ifeq ($(KEYS_EXIST),true)
+    $(warning keys.mk found, generating signed build)
+    IS_SIGNED := true
+    -include $(KEYS_MK_PATH)
+else
+    IS_SIGNED := false
 endif
 
 CUSTOM_INCREMENTAL := .2
-
 CUSTOM_PLATFORM_VERSION := 15
-
 CUSTOM_BUILDTYPE ?= UNOFFICIAL
 
 CUSTOM_SHOW_VERSION := $(CUSTOM_BUILD)-$(CUSTOM_BUILD_DATE)
 
-CUSTOM_VERSION := aosPB_$(CUSTOM_PLATFORM_VERSION)$(CUSTOM_INCREMENTAL)-$(CUSTOM_BUILD)-$(CUSTOM_BUILDTYPE)-$(CUSTOM_BUILD_DATE)$(if $(IS_SIGNED),-signed)
+CUSTOM_VERSION := aosPB_$(CUSTOM_PLATFORM_VERSION)$(CUSTOM_INCREMENTAL)-$(CUSTOM_BUILD)-$(CUSTOM_BUILDTYPE)-$(CUSTOM_BUILD_DATE)$(if $(filter true,$(IS_SIGNED)),-signed)
 CUSTOM_VERSION_PROP := fifteen
 
 PRODUCT_SYSTEM_PROPERTIES += \
@@ -26,4 +31,4 @@ PRODUCT_SYSTEM_PROPERTIES += \
     ro.custom.releasetype=$(CUSTOM_BUILDTYPE) \
     ro.custom.showversion=$(CUSTOM_SHOW_VERSION) \
     ro.custom.version=$(CUSTOM_VERSION) \
-    ro.custom.incremental=$(CUSTOM_PLATFORM_VERSION)$(CUSTOM_INCREMENTAL) 
+    ro.custom.incremental=$(CUSTOM_PLATFORM_VERSION)$(CUSTOM_INCREMENTAL)
