@@ -214,7 +214,8 @@ PRODUCT_EXTRA_RECOVERY_KEYS += \
 
 include vendor/aosp/config/version.mk
 
--include vendor/aosp-priv/keys/keys.mk
+# Signing
+-include vendor/priv-keys/keys.mk
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
 
