@@ -1,13 +1,9 @@
 # Allow vendor/extra to override any property by setting it first
 $(call inherit-product-if-exists, vendor/extra/product.mk)
 
-ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.com.google.clientidbase=android-google
-else
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.com.google.clientidbase=$(PRODUCT_GMS_CLIENTID_BASE)
-endif
+# GMS
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += ro.com.google.clientidbase=android-google
+$(call inherit-product, vendor/gms/setup-gms.mk)
 
 ifeq ($(TARGET_BUILD_VARIANT),eng)
 # Disable ADB authentication
