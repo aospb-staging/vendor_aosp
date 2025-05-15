@@ -209,9 +209,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/crowdin/overlay
 PRODUCT_PACKAGE_OVERLAYS += vendor/crowdin/overlay
 
-PRODUCT_EXTRA_RECOVERY_KEYS += \
-    vendor/aosp/build/target/product/security/lineage
-
 include vendor/aosp/config/version.mk
 
 # Signing
