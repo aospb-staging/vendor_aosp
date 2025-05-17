@@ -60,9 +60,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     vendor/aosp/config/permissions/lineage-sysconfig.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/lineage-sysconfig.xml
 
-# Lineage-specific init rc file
+# AOSP-specific init rc file
 PRODUCT_COPY_FILES += \
-    vendor/aosp/prebuilt/common/etc/init/init.lineage-system_ext.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.lineage-system_ext.rc
+    vendor/aosp/prebuilt/common/etc/init/init.aosp-system_ext.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.aosp-system_ext.rc
 
 # Enable SIP+VoIP on all targets
 PRODUCT_COPY_FILES += \
@@ -96,9 +96,9 @@ ifneq ($(TARGET_DISABLE_EPPE),true)
 $(call enforce-product-packages-exist-internal,$(wildcard device/*/$(AOSP_BUILD)/$(TARGET_PRODUCT).mk),product_manifest.xml rild Calendar Launcher3 Launcher3Go Launcher3QuickStep Launcher3QuickStepGo android.hidl.memory@1.0-impl.vendor vndk_apex_snapshot_package)
 endif
 
-# Lineage packages
+# AOSP packages
 PRODUCT_COPY_FILES += \
-    vendor/aosp/prebuilt/common/etc/init/init.lineage-updater.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.lineage-updater.rc
+    vendor/aosp/prebuilt/common/etc/init/init.aosp-updater.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.aosp-updater.rc
 
 # Extra tools in Lineage
 PRODUCT_PACKAGES += \
