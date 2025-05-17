@@ -96,10 +96,6 @@ ifneq ($(TARGET_DISABLE_EPPE),true)
 $(call enforce-product-packages-exist-internal,$(wildcard device/*/$(AOSP_BUILD)/$(TARGET_PRODUCT).mk),product_manifest.xml rild Calendar Launcher3 Launcher3Go Launcher3QuickStep Launcher3QuickStepGo android.hidl.memory@1.0-impl.vendor vndk_apex_snapshot_package)
 endif
 
-# AOSP packages
-PRODUCT_COPY_FILES += \
-    vendor/aosp/prebuilt/common/etc/init/init.aosp-updater.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.aosp-updater.rc
-
 # Extra tools in Lineage
 PRODUCT_PACKAGES += \
     bash \
