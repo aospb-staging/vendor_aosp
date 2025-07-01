@@ -219,6 +219,9 @@ include vendor/aosp/config/version.mk
 # Signing
 -include vendor/priv-keys/keys.mk
 
+# PlayIntegrity Certification
+-include vendor/certification/config.mk
+
 # TouchGesture
 PRODUCT_PACKAGES += \
     TouchGestures
