@@ -7,6 +7,9 @@ $(call inherit-product, vendor/gms/products/gms.mk)
 # PixelLauncher overlays
 $(call inherit-product-if-exists, vendor/google/overlays/ThemeIcons/config.mk)
 
+# Allow vendor prebuilt repos to exclude themselves from bp scanning
+-include $(sort $(wildcard vendor/*/*/exclude-bp.mk))
+
 PRODUCT_BRAND ?= aosPB
 
 ifeq ($(PRODUCT_GMS_CLIENTID_BASE),)
