@@ -172,6 +172,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     vendor/aosp/config/permissions/privapp-permissions-lineagehw.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-lineagehw.xml
 
+# Quick Tap
+PRODUCT_PACKAGES += \
+    ColumbusService
+
 # rsync
 PRODUCT_PACKAGES += \
     rsync
