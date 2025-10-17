@@ -2,12 +2,19 @@ CURRENT_DEVICE=$(shell echo "$(TARGET_PRODUCT)" | cut -d'_' -f 2,3)
 
 AOSP_BUILD_TYPE ?= COMMUNITY-BUILD
 
+KEYS_MK_PATH := vendor/lineage-priv/keys/keys.mk
+KEYS_EXIST := $(shell [ -f $(KEYS_MK_PATH) ] && echo true || echo false)
+
 # Signing
-ifeq ($(IS_SIGNED),true)
--include vendor/lineage-priv/keys/keys.mk
+ifeq ($(KEYS_EXIST),true)
+    $(warning keys.mk found, generating signed build)
+    IS_SIGNED := true
+    -include $(KEYS_MK_PATH)
+else
+    IS_SIGNED := false
 endif
 
-AOSP_VERSION := aosPB-$(CURRENT_DEVICE)-$(shell date -u +%Y%m%d-%H%M)$(if $(IS_SIGNED),-signed)
+AOSP_VERSION := aosPB-$(CURRENT_DEVICE)-$(shell date -u +%Y%m%d-%H%M)$(if $(filter true,$(IS_SIGNED)),-signed)
 
 # AOSP version properties
 PRODUCT_SYSTEM_PROPERTIES += \
