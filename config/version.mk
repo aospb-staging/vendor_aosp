@@ -2,7 +2,12 @@ CURRENT_DEVICE=$(shell echo "$(TARGET_PRODUCT)" | cut -d'_' -f 2,3)
 
 AOSP_BUILD_TYPE ?= COMMUNITY-BUILD
 
-AOSP_VERSION := aosPB-$(CURRENT_DEVICE)-$(shell date -u +%Y%m%d-%H%M)
+# Signing
+ifeq ($(IS_SIGNED),true)
+-include vendor/lineage-priv/keys/keys.mk
+endif
+
+AOSP_VERSION := aosPB-$(CURRENT_DEVICE)-$(shell date -u +%Y%m%d-%H%M)$(if $(IS_SIGNED),-signed)
 
 # AOSP version properties
 PRODUCT_SYSTEM_PROPERTIES += \
