@@ -1,6 +1,6 @@
 CURRENT_DEVICE=$(shell echo "$(TARGET_PRODUCT)" | cut -d'_' -f 2,3)
 
-AOSP_BUILD_TYPE ?= COMMUNITY-BUILD
+AOSP_BUILD_TYPE ?= COMMUNITY
 
 KEYS_MK_PATH := vendor/lineage-priv/keys/keys.mk
 KEYS_EXIST := $(shell [ -f $(KEYS_MK_PATH) ] && echo true || echo false)
@@ -21,7 +21,7 @@ PRODUCT_SYSTEM_PROPERTIES += \
     ro.aospb.maintainer=$(AOSPB_MAINTAINER) \
     ro.aosp.version=$(AOSP_VERSION) \
     ro.aosp.releasetype=$(AOSP_BUILD_TYPE) \
-    ro.aosp.build.version=$(CURRENT_DEVICE)-$(shell date -u +%Y%m%d-%H%M)
+    ro.aosp.build.version=$(CURRENT_DEVICE)-$(AOSP_BUILD_TYPE)-$(shell date -u +%Y%m%d-%H%M)
 
 # Updater (only if production build)
 ifeq ($(AOSP_BUILD_TYPE),PRODUCTION-BUILD)
