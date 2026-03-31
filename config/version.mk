@@ -21,7 +21,8 @@ PRODUCT_SYSTEM_PROPERTIES += \
     ro.aospb.maintainer=$(AOSPB_MAINTAINER) \
     ro.aosp.version=$(AOSP_VERSION) \
     ro.aosp.releasetype=$(AOSP_BUILD_TYPE) \
-    ro.aosp.build.version=$(CURRENT_DEVICE)-$(AOSP_BUILD_TYPE)-$(shell date -u +%Y%m%d-%H%M)
+    ro.aosp.build.version=$(CURRENT_DEVICE)-$(AOSP_BUILD_TYPE)-$(shell date -u +%Y%m%d-%H%M) \
+    ro.aosp.device=$(CURRENT_DEVICE)
 
 # Updater (only if production build)
 ifeq ($(AOSP_BUILD_TYPE),PRODUCTION-BUILD)
