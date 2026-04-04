@@ -10,10 +10,6 @@ function check_product()
         return
     fi
 
-    local T=$(gettop)
-    $T/prebuilts/build-tools/linux-x86/bin/py3-cmd $T/vendor/aosp/build/tools/barista.py $product
-    source_vendorsetup &>/dev/null
-
     if (echo -n $1 | grep -q -e "^aospb_") ; then
         AOSP_BUILD=$(echo -n $1 | sed -e 's/^aospb_//g')
     else
@@ -47,6 +43,10 @@ function breakfast()
     target=$1
     local variant=$2
     source ${ANDROID_BUILD_TOP}/vendor/aosp/vars/aosp_target_release
+
+    local T=$(gettop)
+    $T/prebuilts/build-tools/linux-x86/bin/py3-cmd $T/vendor/aosp/build/tools/barista.py $product
+    source_vendorsetup &>/dev/null
 
     if [ $# -eq 0 ]; then
         # No arguments, so let's have the full menu
